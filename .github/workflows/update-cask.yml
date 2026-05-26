@@ -1,0 +1,33 @@
+name: Update Cask
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "New version (e.g. 0.2.0)"
+        required: true
+      sha256_arm:
+        description: "SHA256 of the aarch64 DMG"
+        required: true
+
+jobs:
+  update-cask:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update version and SHA256
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+          SHA256_ARM: ${{ github.event.inputs.sha256_arm }}
+        run: |
+          sed -i "s/version \".*\"/version \"$VERSION\"/" Casks/weaviate-ui.rb
+          sed -i "s/sha256 \".*\"/sha256 \"$SHA256_ARM\"/" Casks/weaviate-ui.rb
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/weaviate-ui.rb
+          git commit -m "chore: bump weaviate-ui to ${{ github.event.inputs.version }}"
+          git push
