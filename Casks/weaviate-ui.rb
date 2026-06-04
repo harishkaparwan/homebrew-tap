@@ -1,9 +1,9 @@
 cask "weaviate-ui" do
-  version "0.1.0"
+  version "1.1.29"
 
   on_arm do
     url "https://harishkaparwan.github.io/weaviate-ui/desktop/mac/weaviate-ui_#{version}_aarch64.dmg"
-    sha256 "e4b23f678ff7824f524e8a924132c0a9657ead9ee3b85d06fbbf1ec87d985bf4"
+    sha256 "3bbd062959d1d448c348356ed7bc5abc2490885d8b44db9a8547c0f1f591bc9b"
   end
 
   name "Weaviate UI"
